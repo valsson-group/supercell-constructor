@@ -2,7 +2,7 @@
 Tool for setting up molecular crystal super cell from cif files
 
 ## Authors:
-- Pradip Si, University of North Texas
+- [Pradip Si](https://www.valsson.info/members/pradip-si), University of North Texas
 
 ## Requirments
 - ASE
@@ -14,7 +14,7 @@ Tool for setting up molecular crystal super cell from cif files
 ### How to generate a PBC supercell from a cif file collected from CCDC database
 1. Save the cif file as pdb in Mercury
 If you select the molecule as template ( preferrebly choose the pdb which has unique atom sequence) that is going to be used to match the atom sequence for other polymorphs
-2. Use ASE_cif_to_pymatgen_supercell_cif.py to generate the supercell cif file (choose your cell matrix)
+2. Use `ASE_cif_to_pymatgen_supercell_cif.py` to generate the supercell cif file (choose your cell matrix)
 3. Save the supercell cif file as pdb in Mercury
 4. Use mapping_sequence.py to match the atom squence to the original pdb.(Make sure the supercell pdb file save from Mercury has the similar atom order (can be different name) with the single molecule PBD file, if not manually create the list for key_mapping that matches the atom order)
 
