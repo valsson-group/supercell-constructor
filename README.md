@@ -31,3 +31,7 @@ Tool for setting up molecular crystal supercell from CIF files
 
 
 **Check the new file after each step to ensure that the code is doing the correct task**
+
+## Acknowledgements
+The development of this tool was supported by an DOE Early Career Award (BES Condensed Phase and Interfacial Molecular Science (CPIMS) / DE-SC0024283)
+
