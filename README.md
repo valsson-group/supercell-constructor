@@ -1,5 +1,5 @@
-# SuperCellGenerator
-Tool for setting up molecular crystal supercell from CIF files
+# Super Cell Constructor
+Tool for setting up molecular crystal super cells from CIF files
 
 ## Authors:
 - [Pradip Si](https://www.valsson.info/members/pradip-si), University of North Texas
