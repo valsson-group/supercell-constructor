@@ -1,29 +1,37 @@
-# SuperCellGenerator
-Tool for setting up molecular crystal super cell from cif files
+# Super Cell Constructor
+Tool for setting up molecular crystal super cells from CIF files
 
 ## Authors:
 - [Pradip Si](https://www.valsson.info/members/pradip-si), University of North Texas
 
 ## Requirments
 - ASE
-- Mercury
-- ....
+- Mercury visualization
+- Pymatgen
+- Rdkit
+- Open babel
+- NumPy
 
 ## Instructions 
 
-### How to generate a PBC supercell from a cif file collected from CCDC database
-1. Save the cif file as pdb in Mercury
-If you select the molecule as template ( preferrebly choose the pdb which has unique atom sequence) that is going to be used to match the atom sequence for other polymorphs
-2. Use `ASE_cif_to_pymatgen_supercell_cif.py` to generate the supercell cif file (choose your cell matrix)
-3. Save the supercell cif file as pdb in Mercury
-4. Use mapping_sequence.py to match the atom squence to the original pdb.(Make sure the supercell pdb file save from Mercury has the similar atom order (can be different name) with the single molecule PBD file, if not manually create the list for key_mapping that matches the atom order)
+### How to generate a PBC supercell from a CIF file collected from the CCDC database
+1. Save the CIF files for all polymorphs as PDB files in Mercury. 
+2. If you select the molecule as the template ( preferably choose the PDB with a unique atom sequence) that will be used to match the atom sequence for other polymorphs.
+3. Use `ASE_cif_to_pymatgen_supercell_cif.py` to generate the supercell cif file (choose your cell matrix).
+4. Save the supercell cif file as a PDB file in Mercury.
+5. Use `mapping_sequence.py` to match the atom sequence to the original PDB. (Ensure that the supercell PDB file saved from Mercury has a similar atom order (it may show different names) as the single molecule PBD file, if not manually create the list for `key_mapping` that matches the atom order).
 
-if the molecule is not selected as the template file, before doing to the step2
-a. First reorder the pdb to match atom sequence with the template pdb using reorder-atoms.py
-b. It should pass the validation and also visualize in Molden to make sure, connectivity is same as template. Otherwise manually change the coordinates in the reordered file to match the connectivity (!we need to fix the code later)
-c. Use openbabel to convert the reordered pdb to cif ( obabel input.pdb -O output.cif )
-d. To avoid any inconvenience change the space group to "P1" in the cif file (sed -i "s/_space_group_name_H-M_alt '.*'/_space_group_name_H-M_alt 'P1'/" your_file.cif)
-e. Go back to the step2
+### If the molecule is not selected as the template file, before proceeding to the step2
+
+- First, reorder the PDB file to match the atom sequence with the template PDB file using `reorder-atoms.py`.
+- It should pass the validation and also visualize in Molden or Gaussview to ensure that the connectivity is similar to the template. Otherwise, manually change the coordinates in the reordered PDB file to match the connectivity (!this issue needs to be fixed in the code later).
+- Use Open Babel to convert the reordered PDB to cif ( `obabel input.pdb -O output.cif`).
+- To avoid any inconvenience change the space group to "P1" in the cif file (`sed -i "s/_space_group_name_H-M_alt '.*'/_space_group_name_H-M_alt 'P1'/" your_file.cif`).
+- Return to the step2.
 
 
-**Check the new file after each step to make sure the code is doing correct job**
+**Check the new file after each step to ensure that the code is doing the correct task**
+
+## Acknowledgements
+The development of this tool was supported by an DOE Early Career Award (BES Condensed Phase and Interfacial Molecular Science (CPIMS) / DE-SC0024283)
+
