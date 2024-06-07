@@ -96,7 +96,7 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
                         alt_loc_indicator=' ',
                         res_name="UNK",
                         chain_id='',
-                        res_seq_number=1,
+                        res_seq_number=idx,
                         insert_code=' ',
                         x= coordinates['x_cord'],
                         y= coordinates['y_cord'],
