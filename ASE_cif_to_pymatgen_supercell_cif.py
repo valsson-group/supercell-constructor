@@ -6,7 +6,7 @@ from pymatgen.io.ase import AseAtomsAdaptor
 def make_supercell(cif_input, cell_matrix, cif_output):
 
     """
-    Function generates a supecell from a single molecue cif file.
+    Function generates a supecell from a single molecule cif file.
 
     Parameters: 
     ----------
