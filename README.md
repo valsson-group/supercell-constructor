@@ -16,7 +16,7 @@ Tool for setting up molecular crystal super cells from CIF files
 
 ### Generate a PBC supercell from a CIF file collected from the CCDC database
 1. Save the CIF files for all polymorphs as PDB files using Mercury.
-2. Add missing Hs if required ( obabel file.pdb -O file.pdb -p 7) and change the space group to original space group.
+2. Add missing Hs if required ( `obabel file.pdb -O file.pdb -p 7`) and change the space group to original space group.
 3. Select one as a template (preferably choose the PDB with a unique atom sequence) that will be used to match the atom sequence for other PDBs.
 4. Use `ASE_cif_to_pymatgen_supercell_cif.py` to generate the supercell cif file for the template.
 5. Save the supercell cif file as a PDB file in Mercury.
