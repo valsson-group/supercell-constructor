@@ -6,7 +6,19 @@ import re
 
 def reorder_atoms(mol_pdb_fname, template_pdb_fname, output_pdb_fname):
     from rdkit.Chem import rdmolfiles
+    """
+    function reorders the atom sequence of a PDB file to match the atom sequence of another PDB file.
 
+    Parametars:
+    ----------
+    mol_pdb_fname : str
+        pdb file which atom sequence need to be matched with template pdb
+    template_pdb_fname : str
+        pdb file which will be use as template to match the atom sequence of other pdb
+    output_pdb_fname : str
+        pdb file with the reordered atom sequence
+        
+    """
     mol_to_transform = rdkit.Chem.rdmolfiles.MolFromPDBFile(mol_pdb_fname, removeHs=False)
     transform_order = list(rdmolfiles.CanonicalRankAtoms(mol_to_transform, includeChirality=False))
 
@@ -56,6 +68,18 @@ def reorder_atoms(mol_pdb_fname, template_pdb_fname, output_pdb_fname):
 
 def validate(template_pdb_fname, output_pdb_fname):
     import rdkit.Chem.rdPartialCharges
+    """
+    Function compares two pdb files and returns 'Validation OK' if the the PDBs are similar
+    
+    Parametars:
+    ----------
+    template_pdb_fname : str
+        template pdb which is being compared with
+    output_pdb_fname : str
+        pdb file that needs to match with template
+        
+    """
+    
     mol_template = rdkit.Chem.rdmolfiles.MolFromPDBFile(template_pdb_fname, removeHs=False)
     finished_molecule = rdkit.Chem.rdmolfiles.MolFromPDBFile(output_pdb_fname, removeHs=False)
     N_atoms = finished_molecule.GetNumAtoms()
@@ -79,11 +103,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='reorder ligand atoms according to template',
                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--input', metavar='pdb file', default='in.pdb',
-                    help='(in) file name of the molecule to reoreder')
+                    help='(in) pdb file name of the molecule to be reoredered')
     parser.add_argument('--template', metavar='pdb file', default='template.pdb',
-                    help='(in) file name of the molecule template with the desired order')
+                    help='(in) pdb file name of the template molecule with the desired order')
     parser.add_argument('--output', metavar='pdb file', default='out.pdb',
-                    help='(out) file name for the reordered molecule')
+                    help='(out) pdb file name for the reordered molecule')
     parser.add_argument('--novalidation', action='store_true',
                     help='Skip validation of output.')
 
