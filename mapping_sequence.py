@@ -2,6 +2,18 @@
 
 def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
 
+    """
+    Fucntion reorders the atom sequence of a suprecell pdb saved from Mercury similar to the single molecule pdb which has been used to generate the suprecell.
+
+    mol_pdb_fname : str
+        pdb file of the single molecule, used to generate suprecell
+    mol_repeat_pdb : str
+        pdb file of the supercell saved from Mercury
+    mol_match_pdb : str
+        pdb file of the reordered suprecell 
+        
+    """
+
     elements = []
     
     with open(mol_pdb_fname, 'r') as pdb_file:
