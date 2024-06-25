@@ -4,6 +4,21 @@ from ase.io import read
 from pymatgen.io.ase import AseAtomsAdaptor
 
 def make_supercell(cif_input, cell_matrix, cif_output):
+
+    """
+    Function generates a supecell from a single molecue cif file.
+
+    Parameters: 
+    ----------
+
+    cif_input : str
+        cif file for the single molecule
+    cell_matrix : number array (e.g : 3,3,3) 
+        the matrix of the suprecell, how much the cell will replicate in three directions
+    cif_output : str
+        cif file of generated suprecell 
+    
+    """
     atoms = read(cif_input)
     matrix = list(map(int, cell_matrix.split(',')))
     pymatgen_struc = AseAtomsAdaptor.get_structure(atoms)
