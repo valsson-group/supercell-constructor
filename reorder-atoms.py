@@ -8,10 +8,10 @@ def reorder_atoms(mol_pdb_fname, template_pdb_fname, output_pdb_fname):
     from rdkit.Chem import rdmolfiles
 
     mol_to_transform = rdkit.Chem.rdmolfiles.MolFromPDBFile(mol_pdb_fname, removeHs=False)
-    transform_order = list(rdmolfiles.CanonicalRankAtoms(mol_to_transform))
+    transform_order = list(rdmolfiles.CanonicalRankAtoms(mol_to_transform, includeChirality=False))
 
     mol_template = rdkit.Chem.rdmolfiles.MolFromPDBFile(template_pdb_fname, removeHs=False)
-    template_order = list(rdmolfiles.CanonicalRankAtoms(mol_template))
+    template_order = list(rdmolfiles.CanonicalRankAtoms(mol_template, includeChirality=False))
 
     if len(template_order) != len(transform_order):
         raise RuntimeError('Number of atoms differs between template and molecule to transform.')
