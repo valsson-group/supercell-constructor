@@ -22,13 +22,12 @@ Tool for setting up molecular crystal super cells from CIF files
 5. Save the supercell cif file as a PDB file in Mercury.
 6. Use `mapping_sequence.py` to match the atom sequence to the original PDB. (Ensure that the supercell PDB file saved from Mercury has a similar atom order as the single molecule PBD file, if not specially for highly symmetric molecule, manually create the list for `key_mapping` that matches the atom order).
 
-### If the molecule is not selected as the template file, before proceeding to the step3
+### If the molecule is not selected as the template file, before proceeding to the step4
 
 - First, reorder the PDB file to match the atom sequence with the template PDB file using `reorder-atoms.py`.
 - It should pass the validation and also visualize in Molden or Gaussview to ensure that the connectivity is similar to the template.
-- Use Open Babel to convert the reordered PDB to cif ( `obabel input.pdb -O output.cif`).
-- Change the space group to "P1" in the cif file (`sed -i "s/_space_group_name_H-M_alt '.*'/_space_group_name_H-M_alt 'P1'/" your_file.cif`).
-- Return to the step3.
+- Use Mercury to convert the reordered PDB to cif.
+- Return to the step4.
 
 
 **Check the new file after each step to ensure that the code is doing the correct task**
