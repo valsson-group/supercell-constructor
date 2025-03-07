@@ -2,18 +2,6 @@
 
 def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
 
-    """
-    Fucntion reorders the atom sequence of a suprecell pdb saved from Mercury similar to the single molecule pdb which has been used to generate the suprecell.
-
-    mol_pdb_fname : str
-        pdb file of the single molecule, used to generate suprecell
-    mol_repeat_pdb : str
-        pdb file of the supercell saved from Mercury
-    mol_match_pdb : str
-        pdb file of the reordered suprecell 
-        
-    """
-
     elements = []
     
     with open(mol_pdb_fname, 'r') as pdb_file:
@@ -22,13 +10,13 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
                 columns = line.split()
                 element = columns[2]
                 elements.append(element)
-   
+    print(elements)
     data = {}
     current_key = 0
     
     with open(mol_repeat_pdb, 'r') as f:
         for line in f:
-            if line.startswith('HETATM'):
+            if line.startswith('ATOM'):
                 line_data = line.strip().split()
                 if len(line_data[0]) > 6:
                     atom_name = line_data[1]
@@ -71,11 +59,7 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
                 if len(data[current_key]) == len(elements):
                     current_key += 1   
 
-
-    ### Make sure the supercell pdb file save from Mercury has the similar atom order (can be different name) with the single compund PBD file, if not manually create the list the matches the atom order.
-    ###keys_mapping = manually generated list
     keys_mapping = elements
-    #keys_mapping = ['C1', 'C1D', 'C2', 'C2D', 'C3', 'C3D', 'H1', 'H1D', 'H2', 'H2D', 'H3', 'H3D' ]
 
     # Replace the keys in each dictionary
     for key, val in data.items():
@@ -84,14 +68,14 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
             temp[new_key] = val[old_key]
         val.clear()
         val.update(temp)  
+    #print(data[0])
     # if your key_mapping is similar to the elements, you mightn't have to run next three lines, but anyway it does not make any difference
     new_data = {}
     for key, entry in data.items():
         new_data[key] = {atom: entry.get(atom, {}) for atom in elements}
-
     with open(mol_match_pdb, 'w') as outfile, open(mol_repeat_pdb, 'r') as infile:
         for line in infile:
-                if line.startswith('HETATM'):
+                if line.startswith('ATOM'):
                     break
                 outfile.write(line)
     
