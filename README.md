@@ -26,7 +26,7 @@ Tool for setting up molecular crystal super cells from CIF files
 
 ### If the molecule is not selected as the template file, before proceeding to the step3
 
-- First, reorder the PDB file to match the atom sequence with the template PDB file using `reorder-atoms.py`. (use `split_files.py` and `merged_reorder_pdbs.py` for unit cell having more that one molecule)
+- First, reorder the PDB file to match the atom sequence with the template PDB file using `reorder-atoms.py`. (Follow step 4,5 and 6 for unit cell having more than one molecule to split and reorder.)
 - It should pass the validation ( might visualize to ensure that the connectivity is similar to the template).
 - Return to the step3.
 
@@ -35,4 +35,5 @@ Tool for setting up molecular crystal super cells from CIF files
 
 ## Acknowledgements
 The development of this tool was supported by an DOE Early Career Award (BES Condensed Phase and Interfacial Molecular Science (CPIMS) / DE-SC0024283)
+
 
