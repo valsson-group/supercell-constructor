@@ -1,6 +1,19 @@
 #!/usr/bin/env python
 
-def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
+def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb, cell_matrix):
+
+    """
+    Fucntion reorders the atom sequence of a suprecell pdb saved from Mercury similar to the single molecule pdb which has been used to generate the suprecell.
+
+    mol_pdb_fname : str
+        pdb file of the single molecule with correct atom order
+    mol_repeat_pdb : str
+        pdb file of the supercell
+    mol_match_pdb : str
+        pdb file of the reordered suprecell 
+    cell_matrix : number array (e.g : 3,3,3) 
+        the matrix of the suprecell, how much the cell will replicate in three directions    
+    """
 
     elements = []
     
@@ -10,13 +23,13 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
                 columns = line.split()
                 element = columns[2]
                 elements.append(element)
-    print(elements)
+   
     data = {}
     current_key = 0
     
     with open(mol_repeat_pdb, 'r') as f:
         for line in f:
-            if line.startswith('ATOM'):
+            if line.startswith('HETATM'):
                 line_data = line.strip().split()
                 if len(line_data[0]) > 6:
                     atom_name = line_data[1]
@@ -59,6 +72,7 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
                 if len(data[current_key]) == len(elements):
                     current_key += 1   
 
+
     keys_mapping = elements
 
     # Replace the keys in each dictionary
@@ -68,17 +82,23 @@ def reorder_atoms(mol_pdb_fname, mol_repeat_pdb, mol_match_pdb):
             temp[new_key] = val[old_key]
         val.clear()
         val.update(temp)  
-    #print(data[0])
     # if your key_mapping is similar to the elements, you mightn't have to run next three lines, but anyway it does not make any difference
     new_data = {}
     for key, entry in data.items():
         new_data[key] = {atom: entry.get(atom, {}) for atom in elements}
-    with open(mol_match_pdb, 'w') as outfile, open(mol_repeat_pdb, 'r') as infile:
-        for line in infile:
-                if line.startswith('ATOM'):
-                    break
-                outfile.write(line)
     
+
+    matrix = list(map(int, cell_matrix.split(',')))
+    with open(mol_match_pdb, 'w') as outfile, open(mol_pdb_fname, 'r') as infile:
+        for line in infile:
+            if line.startswith('CRYST1'):
+                parts = line.split()
+                new_line = f"CRYST1 {float(parts[1]) * matrix[0]:8.4f} {float(parts[2]) * matrix[1]:8.4f} {float(parts[3]) * matrix[2]:8.4f}  {parts[4]}  {parts[5]}  {parts[6]}  P 1\n"
+                outfile.write(new_line)
+            elif line.startswith('HETATM'):
+                break
+            else:
+                outfile.write(line) 
         # Initialize the global atom_counter
         atom_counter = 1
     
@@ -111,11 +131,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='match the connectivity of two PDBs for same molecule',
                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--template', metavar='pdb file', default='in.pdb',
-                    help='(in) file name of the original PDB file save from cif file')
+                    help='(in) file name of the PDB file for single molecule with correct atom order')
     parser.add_argument('--input', metavar='pdb file', default='template.pdb',
-                    help='(in) file name of the supercell pdb file save from pymatgen cif file')
+                    help='(in) file name of the supercell pdb file')
     parser.add_argument('--output', metavar='pdb file', default='out.pdb',
                     help='(out) file name for the reordered supercell molecule ')
+    parser.add_argument('--matrix', default='1,1,1', 
+                    help='Scaling factors (a,b,c) for the supercell dimensions.')
 
     args = parser.parse_args()
-    reorder_atoms(args.template, args.input, args.output)
+    reorder_atoms(args.template, args.input, args.output, args.matrix)
