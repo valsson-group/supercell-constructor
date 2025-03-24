@@ -20,9 +20,9 @@ Tool for setting up molecular crystal super cells from CIF files
 3. Use `ASE_cif_to_pymatgen_supercell_cif.py` to generate the supercell cif file for the template. (Change the space group to "P1" in the cif file if it shows error due to space group) 
 4. Convert the supercell.cif to sdf (codcif2sdf supercell.cif > supercell.sdf)
 5. Split all the molecules (obabel supercell.sdf -O mol.pdb -m --separate) and delete CONECT for all PDB files (sed -i '/^CONECT/d' mol*.pdb)
-6. Reorder all the PDBs with a template.pdb (./batch_reorder.sh (should be a file template.pdb))
+6. Reorder all the PDBs with a template.pdb (./batch_reorder.sh (There should be a file template.pdb in the path))
 7. Merge all the reordered PDBs (obabel mol*_reordered.pdb -O supercell.pdb --join) and delete those files (rm mol*.pdb)  
-8. Use `mapping_sequence.py` to match the atom sequence to the template PDB. 
+8. Use `mapping_sequence.py` to match the atom sequence to the template PDB( ```./mapping_sequence_new.py --input supercell.pdb --output supercell_reordered.pdb --template template.pdb --matrix 6,5,4```. 
 
 ### If the molecule is not selected as the template file, before proceeding to the step3
 
