@@ -1,7 +1,7 @@
 # Supercell Constructor
 Tool for setting up molecular crystal supercells from CIF files
 
-## Authors:
+## Authors
 - [Pradip Si](https://www.valsson.info/members/pradip-si), University of North Texas
 
 ## Requirments
